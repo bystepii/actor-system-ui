@@ -133,21 +133,20 @@ function List() {
     setActorData((prev) => {
       const copy = new Map(prev);
       actorNames.forEach(async (name) => {
-        if (!copy.has(name)) {
-          const proxy = new RemoteActorProxy(name, api);
-          copy.set(name, {
-            proxy,
-            messagesSent: 0,
-            messagesReceived: 0,
-            messagesProcessed: 0,
-          });
-        }
-        const actData = copy.get(name);
-        if (actData === undefined)
-          throw new Error('Actor data should not be undefined');
+        const existentData = copy.get(name);
+        const actor =
+          existentData !== undefined
+            ? existentData
+            : {
+                proxy: new RemoteActorProxy(name, api),
+                messagesSent: 0,
+                messagesReceived: 0,
+                messagesProcessed: 0,
+              };
+        copy.set(name, actor);
         try {
-          await actData.proxy.removeAllEventListeners();
-          await actData.proxy.addEventListener(
+          await actor.proxy.removeAllEventListeners();
+          await actor.proxy.addEventListener(
             ['MESSAGE_SENT', 'MESSAGE_RECEIVED', 'MESSAGE_PROCESSED'],
             handleMessageEvent
           );
