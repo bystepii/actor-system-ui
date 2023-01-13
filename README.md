@@ -6,6 +6,12 @@
   This application uses <a href="https://github.com/electron-react-boilerplate/electron-react-boilerplate">Electron React Boilerplate</a>. 
 </p>
 
+## About
+
+Actor System UI is a front-end for [Java Actor System](https://github.com/bystepii/java-actor-system) project. It is a simple application that allows you to create and manage actors and messages.
+
+It is implemented for educational purposes. It is not intended to be used in production.
+
 ## Install
 
 Clone the repo and install dependencies:
